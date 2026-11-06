@@ -1,0 +1,163 @@
+Function main
+	'Turn ON the motor'
+	Motor On
+	'Calling the Pick function'
+	Call Pick
+	'Calling the Drop_1 function'
+	Call Drop_1
+	'Calling the Pick function'
+	Call Pick
+	'Calling the Drop_2 function'
+	Call Drop_2
+	'Calling the Pick function'
+	Call Pick
+	'Calling the Drop_3 function'
+	Call Drop_3
+	'Motor off'
+	Motor Off
+
+Fend
+Function Pick
+	'Setting the speed to 70'
+	Speed 70
+	'Go to the home position'
+	Go home_ref
+	'Open the gripper'
+	Off 11
+	'Wait for 1 second'
+	Wait 1
+	'Set the speed to 30'
+	Speed 30
+	'Go to the Pick approach point'
+	Go pick_exam +Z(100)
+	'Move to the pickup point'
+	Move pick_exam
+	'Wait 1 second'
+	Wait 1
+	'Close the gripper'
+	On 11
+	'Wait for 1 second'
+	Wait 1
+	'Move to the Pick retract point'
+	Move pick_exam -TLZ(100)
+
+Fend
+Function Drop_1
+	'Go to the approach point of the first drop location'
+	Go drop1_exam -TLZ(100)
+	'Move to the drop point of the first ball'
+	Move drop1_exam
+	'Wait 1 second'
+	Wait 1
+	'Open gripper'
+	Off 11
+	'Wait for 1 second'
+	Wait 1
+	'Move to the retract point of the first drop location'
+	Move drop1_exam +Z(100) CP
+	
+Fend
+Function Drop_2
+	'Go to the approach point of the second drop location'
+	Go drop2_exam +Z(100)
+	'Wait for 1 second'
+	Wait 1
+	'Move to the drop point of the second ball'
+	Move drop2_exam
+	'Wait for 1 second'
+	Wait 1
+	'Open gripper'
+	Off 11
+	'Wait for 1 second'
+	Wait 1
+	'Move to the retract point of the first drop location'
+	Move drop2_exam -TLZ(100) CP
+	
+Fend
+Function Drop_3
+	'Go to the approach point of the second drop location'
+	Go drop3_exam -TLZ(100)
+	'Move to the drop point of the second ball'
+	Move drop3_exam
+	'Wait for 1 second'
+	Wait 1
+	'Open gripper'
+	Off 11
+	'Wait for 1 second'
+	Wait 1
+	'Move to the retract point of the first drop location'
+	Go drop3_exam +Z(100) CP
+	'Go to the home position'
+	Go home_ref
+	
+Fend
+Function Loop_Cycle_count3
+	Motor On
+	'Turn the motor ON'
+	Integer count
+	'Declare a variable called count of type integer'
+	count = 1
+	'Assign the value of count as 1'
+	Do  'Print message on the run window'
+		Print " Current loop cycle count : ", count
+		Call Pick
+		Call Drop_1
+		Call Pick
+		Call Drop_2
+		Call Pick
+		Call Drop_3
+		'Increment count by 1'
+		count = count + 1
+		'Repeat the cycle until count > 3'
+	Loop Until count > 3
+
+Fend
+Function Loop_Cycle_updated
+	'Turn ON the motor'
+	Motor On
+	'Declare a variable called count1 of type integer'
+	Integer count1
+	'Declare a variable called count2 of type integer'
+	Integer count2
+	'Declare a variable called count3 of type integer'
+	Integer count3
+	'Assign the value of count1 as 0'
+	count1 = 0
+	'Assign the value of count2 as 0'
+	count2 = 0
+	'Assign the value of count3 as 0'
+	count3 = 0
+	Do  'Print message on the run window'
+		Print " Picking Up the first ball "
+		Call Pick
+		'Print message on the run window'
+		Print " Dropping the first ball "
+		Call Drop_1
+		'Increment count1 by 1'
+		count1 = count1 + 1
+	Loop Until count1 = 1
+	
+	Do  'Print message on the run window'
+		Print " Picking Up the second ball "
+		Call Pick
+		'Print message on the run window'
+		Print " Dropping the second ball "
+		Call Drop_2
+		'Increment count2 by 1'
+		count2 = count2 + 1
+		
+	Loop Until count2 = 1
+	
+	Do  'Print message on the run window'
+		Print " Picking Up the third ball "
+		Call Pick
+		'Print message on the run window'
+		Print " Dropping the third ball "
+		Call Drop_3
+		'Increment count3 by 1'
+		count3 = count3 + 1
+		
+	Loop Until count3 = 1
+	
+Fend
+
